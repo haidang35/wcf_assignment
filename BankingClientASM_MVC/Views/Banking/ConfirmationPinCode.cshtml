@@ -1,0 +1,19 @@
+﻿@model BankingClientASM_MVC.ViewModels.PinCodeViewModel
+@{
+    ViewBag.Title = "ConfirmationPinCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ConfirmationPinCode</h2>
+
+@using (Html.BeginForm("ConfirmationPinCode", "Banking", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.PinCode, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PinCode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PinCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Transfer</button>
+}

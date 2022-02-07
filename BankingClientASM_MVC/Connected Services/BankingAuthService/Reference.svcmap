@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="61ea9b45-61f7-460c-9f49-b973314cb9e6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51232/BankingAuthService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BankingAuthService.xsd" MetadataType="Schema" ID="293b71af-85fc-4192-bc58-df5b9dfec5cc" SourceId="1" SourceUrl="http://localhost:51232/BankingAuthService.svc?xsd=xsd3" />
+    <MetadataFile FileName="BankingAuthService1.xsd" MetadataType="Schema" ID="cade6d11-50f8-4577-8e32-f457e736657f" SourceId="1" SourceUrl="http://localhost:51232/BankingAuthService.svc?xsd=xsd2" />
+    <MetadataFile FileName="BankingAuthService2.xsd" MetadataType="Schema" ID="d2a166b4-96c4-4d66-86c4-04e041eb840d" SourceId="1" SourceUrl="http://localhost:51232/BankingAuthService.svc?xsd=xsd1" />
+    <MetadataFile FileName="BankingAuthService3.xsd" MetadataType="Schema" ID="8a06f7ba-9426-47e1-bb38-7acc998f91a0" SourceId="1" SourceUrl="http://localhost:51232/BankingAuthService.svc?xsd=xsd0" />
+    <MetadataFile FileName="BankingAuthService.wsdl" MetadataType="Wsdl" ID="1a068ec2-c5b8-4a6f-abd5-1788367cea79" SourceId="1" SourceUrl="http://localhost:51232/BankingAuthService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

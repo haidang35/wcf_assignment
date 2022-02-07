@@ -1,0 +1,99 @@
+﻿@model IEnumerable<BankingClientASM_MVC.BankingService.TransactionHistoryDto>
+
+@{
+    ViewBag.Title = "TransactionHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Transaction History</h6>
+    </div>
+    <div class="card-body">
+
+        @using (Html.BeginForm("TransactionHistory", "Banking", FormMethod.Get))
+        {
+            <div class="form-group">
+                <input type="date" name="fromDateParam" value="@DateTime.Now.ToString()" />
+                <input type="date" name="toDateParam" value="@DateTime.Now.ToString()" />
+            </div>
+            <button class="btn btn-primary">Filter</button>
+        }
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Transaction ID
+                        </th>
+                        <th>
+                            Receiver Account Number
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Fees
+                        </th>
+                        <th>
+                            Order Code
+                        </th>
+                        <th>
+                            Message
+                        </th>
+                        <th>
+                            Created At
+                        </th>
+                    </tr>
+                </thead>
+                @{
+                    var accountCurrent = HttpContext.Current.Session["accountCurrent"] as BankingClientASM_MVC.BankingService.AccountDto;
+                }
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReceiverAccountNumber)
+                            </td>
+                            <td>
+                                @if (accountCurrent != null)
+                                {
+                                    if (String.Compare(accountCurrent.AccountNumber, item.SenderAccountNumber) == 0)
+                                    {
+                                        <button class="btn btn-sm btn-danger">- @item.Amount</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-sm btn-success">+ @item.Amount</button>
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fees)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Message)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedAt)
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

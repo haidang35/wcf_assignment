@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:51232/BankingAuthService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/BankingServiceASM.Entities" />
+  <xs:complexType name="AccountRegisterDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ConfirmationPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdentityNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountRegisterDto" nillable="true" type="tns:AccountRegisterDto" />
+  <xs:complexType name="AccountDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AccountNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Balance" type="xs:double" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdentityNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PinCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/BankingServiceASM.Entities" minOccurs="0" name="ReceiveTransactionHistories" nillable="true" type="q1:ArrayOfTransactionHistory" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/BankingServiceASM.Entities" minOccurs="0" name="Status" type="q2:AccountStatus" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/BankingServiceASM.Entities" minOccurs="0" name="TransferTransactionHistories" nillable="true" type="q3:ArrayOfTransactionHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountDto" nillable="true" type="tns:AccountDto" />
+</xs:schema>
