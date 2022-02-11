@@ -104,10 +104,12 @@
     <Compile Include="Data\BankingDbContext.cs" />
     <Compile Include="Dtos\AccountDto.cs" />
     <Compile Include="Dtos\AccountGetTransactionHistoryDto.cs" />
+    <Compile Include="Dtos\AccountInfoTransferDto.cs" />
     <Compile Include="Dtos\AccountLoginDto.cs" />
     <Compile Include="Dtos\AccountRegisterDto.cs" />
     <Compile Include="Dtos\AccountTransactionDto.cs" />
     <Compile Include="Dtos\TransactionHistoryDto.cs" />
+    <Compile Include="Dtos\TransferNormalInfoDto.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\TransactionHistory.cs" />
     <Compile Include="Helpers\Hashing.cs" />
@@ -125,9 +127,9 @@
     <Compile Include="Migrations\202201281425239_UpdateTransactionHistory.Designer.cs">
       <DependentUpon>202201281425239_UpdateTransactionHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202201290926153_Update.cs" />
-    <Compile Include="Migrations\202201290926153_Update.Designer.cs">
-      <DependentUpon>202201290926153_Update.cs</DependentUpon>
+    <Compile Include="Migrations\202202110221391_UpdateAccount1.cs" />
+    <Compile Include="Migrations\202202110221391_UpdateAccount1.Designer.cs">
+      <DependentUpon>202202110221391_UpdateAccount1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -168,8 +170,8 @@
     <EmbeddedResource Include="Migrations\202201281425239_UpdateTransactionHistory.resx">
       <DependentUpon>202201281425239_UpdateTransactionHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201290926153_Update.resx">
-      <DependentUpon>202201290926153_Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202202110221391_UpdateAccount1.resx">
+      <DependentUpon>202202110221391_UpdateAccount1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

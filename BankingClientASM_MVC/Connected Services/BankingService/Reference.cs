@@ -1292,15 +1292,201 @@ namespace BankingClientASM_MVC.BankingService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TransferNormalInfoDto", Namespace="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos")]
+    [System.SerializableAttribute()]
+    public partial class TransferNormalInfoDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private BankingClientASM_MVC.BankingService.AccountPayFee AccountPayFeesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ReceiverAccountNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SenderAccountNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SenderPinCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public BankingClientASM_MVC.BankingService.AccountPayFee AccountPayFees {
+            get {
+                return this.AccountPayFeesField;
+            }
+            set {
+                if ((this.AccountPayFeesField.Equals(value) != true)) {
+                    this.AccountPayFeesField = value;
+                    this.RaisePropertyChanged("AccountPayFees");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ReceiverAccountNumber {
+            get {
+                return this.ReceiverAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReceiverAccountNumberField, value) != true)) {
+                    this.ReceiverAccountNumberField = value;
+                    this.RaisePropertyChanged("ReceiverAccountNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SenderAccountNumber {
+            get {
+                return this.SenderAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SenderAccountNumberField, value) != true)) {
+                    this.SenderAccountNumberField = value;
+                    this.RaisePropertyChanged("SenderAccountNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SenderPinCode {
+            get {
+                return this.SenderPinCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SenderPinCodeField, value) != true)) {
+                    this.SenderPinCodeField = value;
+                    this.RaisePropertyChanged("SenderPinCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountInfoTransferDto", Namespace="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos")]
+    [System.SerializableAttribute()]
+    public partial class AccountInfoTransferDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AccountNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FullNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AccountNumber {
+            get {
+                return this.AccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AccountNumberField, value) != true)) {
+                    this.AccountNumberField = value;
+                    this.RaisePropertyChanged("AccountNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FullName {
+            get {
+                return this.FullNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
+                    this.FullNameField = value;
+                    this.RaisePropertyChanged("FullName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BankingService.IBankingService")]
     public interface IBankingService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/RequireTransaction", ReplyAction="http://tempuri.org/IBankingService/RequireTransactionResponse")]
-        BankingClientASM_MVC.BankingService.TransactionHistoryDto RequireTransaction(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/TransferPaymentOrder", ReplyAction="http://tempuri.org/IBankingService/TransferPaymentOrderResponse")]
+        BankingClientASM_MVC.BankingService.TransactionHistoryDto TransferPaymentOrder(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/RequireTransaction", ReplyAction="http://tempuri.org/IBankingService/RequireTransactionResponse")]
-        System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.TransactionHistoryDto> RequireTransactionAsync(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/TransferPaymentOrder", ReplyAction="http://tempuri.org/IBankingService/TransferPaymentOrderResponse")]
+        System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.TransactionHistoryDto> TransferPaymentOrderAsync(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/ShowTransactionHistory", ReplyAction="http://tempuri.org/IBankingService/ShowTransactionHistoryResponse")]
         BankingClientASM_MVC.BankingService.TransactionHistoryDto[] ShowTransactionHistory(BankingClientASM_MVC.BankingService.AccountGetTransactionHistoryDto acc);
@@ -1314,11 +1500,23 @@ namespace BankingClientASM_MVC.BankingService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/ShowAccountInformation", ReplyAction="http://tempuri.org/IBankingService/ShowAccountInformationResponse")]
         System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.AccountDto> ShowAccountInformationAsync(BankingClientASM_MVC.BankingService.AccountLoginDto account);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/SendConfirmationPinCode", ReplyAction="http://tempuri.org/IBankingService/SendConfirmationPinCodeResponse")]
-        bool SendConfirmationPinCode(BankingClientASM_MVC.BankingService.AccountLoginDto account);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/SendConfirmationOTP", ReplyAction="http://tempuri.org/IBankingService/SendConfirmationOTPResponse")]
+        bool SendConfirmationOTP(BankingClientASM_MVC.BankingService.AccountLoginDto account);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/SendConfirmationPinCode", ReplyAction="http://tempuri.org/IBankingService/SendConfirmationPinCodeResponse")]
-        System.Threading.Tasks.Task<bool> SendConfirmationPinCodeAsync(BankingClientASM_MVC.BankingService.AccountLoginDto account);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/SendConfirmationOTP", ReplyAction="http://tempuri.org/IBankingService/SendConfirmationOTPResponse")]
+        System.Threading.Tasks.Task<bool> SendConfirmationOTPAsync(BankingClientASM_MVC.BankingService.AccountLoginDto account);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/TransferNormal", ReplyAction="http://tempuri.org/IBankingService/TransferNormalResponse")]
+        BankingClientASM_MVC.BankingService.TransactionHistoryDto TransferNormal(BankingClientASM_MVC.BankingService.TransferNormalInfoDto transferInfo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/TransferNormal", ReplyAction="http://tempuri.org/IBankingService/TransferNormalResponse")]
+        System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.TransactionHistoryDto> TransferNormalAsync(BankingClientASM_MVC.BankingService.TransferNormalInfoDto transferInfo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/CheckAccountInfoTransfer", ReplyAction="http://tempuri.org/IBankingService/CheckAccountInfoTransferResponse")]
+        BankingClientASM_MVC.BankingService.AccountInfoTransferDto CheckAccountInfoTransfer(string AccountNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBankingService/CheckAccountInfoTransfer", ReplyAction="http://tempuri.org/IBankingService/CheckAccountInfoTransferResponse")]
+        System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.AccountInfoTransferDto> CheckAccountInfoTransferAsync(string AccountNumber);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1348,12 +1546,12 @@ namespace BankingClientASM_MVC.BankingService {
                 base(binding, remoteAddress) {
         }
         
-        public BankingClientASM_MVC.BankingService.TransactionHistoryDto RequireTransaction(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction) {
-            return base.Channel.RequireTransaction(accountTransaction);
+        public BankingClientASM_MVC.BankingService.TransactionHistoryDto TransferPaymentOrder(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction) {
+            return base.Channel.TransferPaymentOrder(accountTransaction);
         }
         
-        public System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.TransactionHistoryDto> RequireTransactionAsync(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction) {
-            return base.Channel.RequireTransactionAsync(accountTransaction);
+        public System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.TransactionHistoryDto> TransferPaymentOrderAsync(BankingClientASM_MVC.BankingService.AccountTransactionDto accountTransaction) {
+            return base.Channel.TransferPaymentOrderAsync(accountTransaction);
         }
         
         public BankingClientASM_MVC.BankingService.TransactionHistoryDto[] ShowTransactionHistory(BankingClientASM_MVC.BankingService.AccountGetTransactionHistoryDto acc) {
@@ -1372,12 +1570,28 @@ namespace BankingClientASM_MVC.BankingService {
             return base.Channel.ShowAccountInformationAsync(account);
         }
         
-        public bool SendConfirmationPinCode(BankingClientASM_MVC.BankingService.AccountLoginDto account) {
-            return base.Channel.SendConfirmationPinCode(account);
+        public bool SendConfirmationOTP(BankingClientASM_MVC.BankingService.AccountLoginDto account) {
+            return base.Channel.SendConfirmationOTP(account);
         }
         
-        public System.Threading.Tasks.Task<bool> SendConfirmationPinCodeAsync(BankingClientASM_MVC.BankingService.AccountLoginDto account) {
-            return base.Channel.SendConfirmationPinCodeAsync(account);
+        public System.Threading.Tasks.Task<bool> SendConfirmationOTPAsync(BankingClientASM_MVC.BankingService.AccountLoginDto account) {
+            return base.Channel.SendConfirmationOTPAsync(account);
+        }
+        
+        public BankingClientASM_MVC.BankingService.TransactionHistoryDto TransferNormal(BankingClientASM_MVC.BankingService.TransferNormalInfoDto transferInfo) {
+            return base.Channel.TransferNormal(transferInfo);
+        }
+        
+        public System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.TransactionHistoryDto> TransferNormalAsync(BankingClientASM_MVC.BankingService.TransferNormalInfoDto transferInfo) {
+            return base.Channel.TransferNormalAsync(transferInfo);
+        }
+        
+        public BankingClientASM_MVC.BankingService.AccountInfoTransferDto CheckAccountInfoTransfer(string AccountNumber) {
+            return base.Channel.CheckAccountInfoTransfer(AccountNumber);
+        }
+        
+        public System.Threading.Tasks.Task<BankingClientASM_MVC.BankingService.AccountInfoTransferDto> CheckAccountInfoTransferAsync(string AccountNumber) {
+            return base.Channel.CheckAccountInfoTransferAsync(AccountNumber);
         }
     }
 }

@@ -42,6 +42,7 @@
                                     </div>
                                     @using (Html.BeginForm("Login", "Banking", FormMethod.Post, new { @class = "user" }))
                                     {
+                                        @Html.AntiForgeryToken()
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                         <div class="form-group">
                                             @Html.EditorFor(model => model.Username,

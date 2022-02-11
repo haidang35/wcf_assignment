@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:51232/BankingService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" />
-  <xs:element name="RequireTransaction">
+  <xs:element name="TransferPaymentOrder">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" minOccurs="0" name="accountTransaction" nillable="true" type="q1:AccountTransactionDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RequireTransactionResponse">
+  <xs:element name="TransferPaymentOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" minOccurs="0" name="RequireTransactionResult" nillable="true" type="q2:TransactionHistoryDto" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" minOccurs="0" name="TransferPaymentOrderResult" nillable="true" type="q2:TransactionHistoryDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -43,17 +43,45 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendConfirmationPinCode">
+  <xs:element name="SendConfirmationOTP">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" minOccurs="0" name="account" nillable="true" type="q7:AccountLoginDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendConfirmationPinCodeResponse">
+  <xs:element name="SendConfirmationOTPResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="SendConfirmationPinCodeResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="SendConfirmationOTPResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferNormal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" minOccurs="0" name="transferInfo" nillable="true" type="q8:TransferNormalInfoDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferNormalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" minOccurs="0" name="TransferNormalResult" nillable="true" type="q9:TransactionHistoryDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckAccountInfoTransfer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AccountNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckAccountInfoTransferResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/BankingServiceASM.Dtos" minOccurs="0" name="CheckAccountInfoTransferResult" nillable="true" type="q10:AccountInfoTransferDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

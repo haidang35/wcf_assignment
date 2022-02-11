@@ -26,8 +26,9 @@ namespace BankingServiceASM.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DANG-JINNER\\SQLEXPRESS;Initial Catalog=BankService;Integrated Securit" +
-            "y=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\nguye\\AppData\\Local" +
+            "\\Microsoft\\Microsoft SQL Server Local DB\\Instances\\MSSQLLocalDB\\BankingServiceAS" +
+            "M.mdf\";Integrated Security=True;Connect Timeout=30")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

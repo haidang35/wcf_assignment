@@ -13,12 +13,16 @@ namespace BankingServiceASM
     public interface IBankingService
     {
         [OperationContract]
-        TransactionHistoryDto RequireTransaction(AccountTransactionDto accountTransaction);
+        TransactionHistoryDto TransferPaymentOrder(AccountTransactionDto accountTransaction);
         [OperationContract]
         ICollection<TransactionHistoryDto> ShowTransactionHistory(AccountGetTransactionHistoryDto acc);
         [OperationContract]
         AccountDto ShowAccountInformation(AccountLoginDto account);
         [OperationContract]
-        bool SendConfirmationPinCode(AccountLoginDto account);
+        bool SendConfirmationOTP(AccountLoginDto account);
+        [OperationContract]
+        TransactionHistoryDto TransferNormal(TransferNormalInfoDto transferInfo);
+        [OperationContract]
+        AccountInfoTransferDto CheckAccountInfoTransfer(string AccountNumber);
     }
 }

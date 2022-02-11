@@ -20,10 +20,9 @@ namespace BankingServiceASM
     {
         private BankingDbContext db = new BankingDbContext();
         private TwilioSMSService twilioService = new TwilioSMSService();
-        public TransactionHistoryDto RequireTransaction(AccountTransactionDto accountTransaction)
+        public TransactionHistoryDto TransferPaymentOrder(AccountTransactionDto accountTransaction)
         {
             var receiverAccount = db.Accounts.Where(a => a.AccountCode == accountTransaction.ReceiverAccountCode).FirstOrDefault();
-            Debug.WriteLine($"Receiver {receiverAccount.AccountCode}");
             if (receiverAccount != null)
             {
                 if (Hashing.CheckHashing(accountTransaction.Password, receiverAccount.Password))
@@ -33,13 +32,12 @@ namespace BankingServiceASM
                     {
                         if (accountTransaction.SenderPinCode == senderAccount.PinCode && accountTransaction.Amount <= senderAccount.Balance)
                         {
-                            Debug.WriteLine($"transaction");
                             using (DbContextTransaction transaction = db.Database.BeginTransaction())
                             {
                                 try
                                 {
                                     Debug.WriteLine(accountTransaction.AccountPayFees);
-                                    switch(accountTransaction.AccountPayFees)
+                                    switch (accountTransaction.AccountPayFees)
                                     {
                                         case AccountPayFee.ReceiverAccount:
                                             receiverAccount.Balance += accountTransaction.Amount - getFees(accountTransaction.Amount);
@@ -68,7 +66,7 @@ namespace BankingServiceASM
                                     db.TransactionHistories.Add(transactionHistory);
                                     db.SaveChanges();
                                     transaction.Commit();
-                                    return transactionHistory.ToTransactionHistoryDto(); 
+                                    return transactionHistory.ToTransactionHistoryDto();
                                 }
                                 catch (Exception ex)
                                 {
@@ -86,19 +84,23 @@ namespace BankingServiceASM
         public double getFees(double amount)
         {
             double fees = 0;
-            if(amount <= 100000)
+            if (amount <= 100000 && amount > 0)
             {
-                fees = 10000;
-            } else if(amount > 100000 && amount <= 500000)
+                fees = 1000;
+            }
+            else if (amount > 100000 && amount <= 500000)
             {
                 fees = amount * 0.02;
-            }else if(amount > 500000 && amount <= 1000000)
+            }
+            else if (amount > 500000 && amount <= 1000000)
             {
                 fees = amount * 0.015;
-            }else if(amount > 1000000 && amount <= 5000000)
+            }
+            else if (amount > 1000000 && amount <= 5000000)
             {
                 fees = amount * 0.01;
-            }else if(amount > 5000000)
+            }
+            else if (amount > 5000000)
             {
                 fees = amount * 0.005;
             }
@@ -108,7 +110,7 @@ namespace BankingServiceASM
         public ICollection<TransactionHistoryDto> ShowTransactionHistory(AccountGetTransactionHistoryDto acc)
         {
             List<TransactionHistoryDto> transactionHistoryList = new List<TransactionHistoryDto>();
-            if(CheckExistAccount(acc.Username, acc.Password))
+            if (CheckExistAccount(acc.Username, acc.Password))
             {
                 var account = db.Accounts.Where(a => a.Username == acc.Username).FirstOrDefault();
                 var transactionHistories = db.TransactionHistories.
@@ -119,7 +121,7 @@ namespace BankingServiceASM
                 {
                     transactionHistoryList.Add(transaction.ToTransactionHistoryDto());
                 }
-                
+
             }
             return transactionHistoryList;
         }
@@ -127,9 +129,9 @@ namespace BankingServiceASM
         public AccountDto ShowAccountInformation(AccountLoginDto account)
         {
             var acc = db.Accounts.Where(a => a.Username == account.Username).FirstOrDefault();
-            if(acc != null)
+            if (acc != null)
             {
-                if(Hashing.CheckHashing(account.Password, acc.Password))
+                if (Hashing.CheckHashing(account.Password, acc.Password))
                 {
                     return acc.ToAccountDto();
                 }
@@ -147,9 +149,9 @@ namespace BankingServiceASM
             return false;
         }
 
-        public bool SendConfirmationPinCode(AccountLoginDto account)
+        public bool SendConfirmationOTP(AccountLoginDto account)
         {
-            if(CheckExistAccount(account.Username, account.Password))
+            if (CheckExistAccount(account.Username, account.Password))
             {
                 var acc = db.Accounts.Where(a => a.Username == account.Username).FirstOrDefault();
                 try
@@ -163,12 +165,83 @@ namespace BankingServiceASM
                     twilioService.SendSMS(acc.PhoneNumber, message);
                     return true;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
                 }
             }
             return false;
+        }
+
+        public AccountInfoTransferDto CheckAccountInfoTransfer(string accountNumber)
+        {
+            var account = db.Accounts.Where(a => a.AccountNumber == accountNumber).FirstOrDefault();
+            if (account != null)
+            {
+                return new AccountInfoTransferDto()
+                {
+                    AccountNumber = account.AccountNumber,
+                    FullName = account.FullName,
+                };
+            }
+            return null;
+        }
+
+        public TransactionHistoryDto TransferNormal(TransferNormalInfoDto transferInfo)
+        {
+            var receiverAccount = db.Accounts.Where(a => a.AccountNumber == transferInfo.ReceiverAccountNumber).FirstOrDefault();
+            if (receiverAccount != null)
+            {
+
+                var senderAccount = db.Accounts.Where(a => a.AccountNumber == transferInfo.SenderAccountNumber).FirstOrDefault();
+                if (senderAccount != null)
+                {
+                    if (transferInfo.SenderPinCode == senderAccount.PinCode && transferInfo.Amount <= senderAccount.Balance)
+                    {
+                        using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                switch (transferInfo.AccountPayFees)
+                                {
+                                    case AccountPayFee.ReceiverAccount:
+                                        receiverAccount.Balance += transferInfo.Amount - getFees(transferInfo.Amount);
+                                        senderAccount.Balance -= transferInfo.Amount;
+                                        break;
+                                    case AccountPayFee.SenderAccount:
+                                        senderAccount.Balance -= transferInfo.Amount + getFees(transferInfo.Amount);
+                                        receiverAccount.Balance += transferInfo.Amount;
+                                        break;
+                                }
+                                db.Entry(receiverAccount).State = EntityState.Modified;
+                                db.Entry(senderAccount).State = EntityState.Modified;
+                                var transactionHistory = new Entities.TransactionHistory
+                                {
+                                    TransactionId = Guid.NewGuid().ToString(),
+                                    SenderAccountNumber = senderAccount.AccountNumber,
+                                    ReceiverAccountNumber = receiverAccount.AccountNumber,
+                                    Amount = transferInfo.Amount,
+                                    Fees = getFees(transferInfo.Amount),
+                                    Message = transferInfo.Message,
+                                    Status = Entities.TransactionHistoryStatus.Success,
+                                    CreatedAt = DateTime.Now,
+                                    UpdatedAt = DateTime.Now,
+                                };
+                                db.TransactionHistories.Add(transactionHistory);
+                                db.SaveChanges();
+                                transaction.Commit();
+                                return transactionHistory.ToTransactionHistoryDto();
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                            }
+                        }
+                    }
+
+                }
+            }
+            return null;
         }
     }
 }

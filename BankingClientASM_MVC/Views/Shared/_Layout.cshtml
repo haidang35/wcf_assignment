@@ -62,10 +62,17 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Transfer", "Banking")">Transfer</a>
+                        <a class="collapse-item" href="@Url.Action("TransferNormal", "Banking")">Transfer</a>
+                        <a class="collapse-item" href="@Url.Action("TransferPayment", "Banking")">Payment</a>
                         <a class="collapse-item" href="@Url.Action("TransactionHistory", "Banking")">Transaction History</a>
                     </div>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("MyAccountInfo", "Banking")">
+                    <i class="fas fa-user"></i>
+                    <span>My Account</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Logout", "Banking")">
@@ -354,6 +361,8 @@
     <!-- Page level custom scripts -->
     <script src="~/Public/js/demo/chart-area-demo.js"></script>
     <script src="~/Public/js/demo/chart-pie-demo.js"></script>
+
+    @RenderSection("Scripts", required: false)
 
 </body>
 

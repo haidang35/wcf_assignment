@@ -35,7 +35,7 @@ namespace BankingServiceASM
                     PhoneNumber = account.PhoneNumber,
                     Email = account.Email,
                     Address = account.Address,
-                    Balance = 0,
+                    Balance = 5000000,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     Status = AccountStatus.Active,

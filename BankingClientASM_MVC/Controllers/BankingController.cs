@@ -18,20 +18,53 @@ namespace BankingClientASM_MVC.Controllers
         private BankingAuthService.BankingAuthServiceClient bankingAuthClient = new BankingAuthService.BankingAuthServiceClient();
 
         [Authorize]
+        [HttpGet]
         public ActionResult Dashboard()
         {
-            var account = Session["accountCurrent"];
-            return View(account);
+            var account = Session["accountLoginInfo"] as AccountLoginViewModel;
+            if(account != null)
+            {
+                var myAccountInfo = bankingClient.ShowAccountInformation(new BankingService.AccountLoginDto
+                {
+                    Username = account.Username,
+                    Password = account.Password
+                });
+                if (myAccountInfo != null)
+                {
+                    return View(myAccountInfo);
+                }
+            }
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult MyAccountInfo()
+        {
+            var accountLoginInfo = Session["accountLoginInfo"] as AccountLoginViewModel;
+            if(accountLoginInfo != null && isValidAuthBankingService())
+            {
+                var myAccountInfo = bankingClient.ShowAccountInformation(new BankingService.AccountLoginDto
+                {
+                    Username = accountLoginInfo.Username,
+                    Password = accountLoginInfo.Password
+                });
+                if (myAccountInfo != null)
+                {
+                    return View(myAccountInfo);
+                }
+            }
+            return RedirectToAction("Login");
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult Transfer()
+        public ActionResult TransferNormal()
         {
             try
             {
                 var accountCurrent = Session["accountCurrent"] as BankingService.AccountDto;
-                if(accountCurrent != null && isValidAuthBankingService())
+                if (accountCurrent != null)
                 {
                     return View();
                 }
@@ -43,14 +76,127 @@ namespace BankingClientASM_MVC.Controllers
             return RedirectToAction("Login");
         }
 
-      
-        [HttpPost]
         [Authorize]
-        public ActionResult Transfer(TransferViewModel transferInfo)
+        [HttpPost]
+        public ActionResult TransferNormal(TransferNormalViewModel transferInfo)
         {
             if (ModelState.IsValid)
             {
-                if(isValidAuthBankingService())
+                var accountCurrent = Session["accountCurrent"] as BankingService.AccountDto;
+                if (accountCurrent != null)
+                {
+                    TempData["lastTransferNormal"] = new BankingService.TransferNormalInfoDto
+                    {
+                        ReceiverAccountNumber = transferInfo.ReceiverAccountNumber,
+                        SenderAccountNumber = accountCurrent.AccountNumber,
+                        SenderPinCode = "",
+                        AccountPayFees = transferInfo.AccountPayFees,
+                        Amount = transferInfo.Amount,
+                        Message = transferInfo.Message,
+                    };
+                    var accountLoginInfo = Session["accountLoginInfo"] as AccountLoginViewModel;
+                    if (accountLoginInfo != null && isValidAuthBankingService())
+                    {
+                        bankingClient.SendConfirmationOTP(new BankingService.AccountLoginDto
+                        {
+                            Username = accountLoginInfo.Username,
+                            Password = accountLoginInfo.Password
+                        });
+                        return View("ConfirmationOTPTransferNormal");
+                    }
+                }
+
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult ConfirmationOTPTransferNormal()
+        {
+            if (TempData["lastTransferNormal"] != null)
+            {
+                return View();
+            }
+            return RedirectToAction("TransferNormal");
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmationOTPTransferNormal(PinCodeViewModel otp)
+        {
+            if (ModelState.IsValid)
+            {
+                var transferInfo = TempData["lastTransferNormal"] as BankingService.TransferNormalInfoDto;
+                if (transferInfo != null && isValidAuthBankingService())
+                {
+                    var transaction = bankingClient.TransferNormal(new BankingService.TransferNormalInfoDto()
+                    {
+                        ReceiverAccountNumber = transferInfo.ReceiverAccountNumber,
+                        SenderAccountNumber = transferInfo.SenderAccountNumber,
+                        SenderPinCode = otp.PinCode,
+                        AccountPayFees = transferInfo.AccountPayFees,
+                        Amount = transferInfo.Amount,
+                        Message = transferInfo.Message,
+                    });
+                    if(transaction != null)
+                    {
+                        return View("TransferSuccess", transaction);
+                    }else
+                    {
+                        return View("TransferFailed");
+                    }
+                }
+            }
+            return View();
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public JsonResult CheckAccountTransfer(string accountNumber)
+        {
+            if (isValidAuthBankingService())
+            {
+                var accountTransferInfo = bankingClient.CheckAccountInfoTransfer(accountNumber);
+                if (accountTransferInfo != null)
+                {
+                    return this.Json(accountTransferInfo, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult TransferPayment()
+        {
+            try
+            {
+                var accountCurrent = Session["accountCurrent"] as BankingService.AccountDto;
+                if (accountCurrent != null && isValidAuthBankingService())
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return RedirectToAction("Login");
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult TransferPayment(TransferPaymentViewModel transferInfo)
+        {
+            if (ModelState.IsValid)
+            {
+                if (isValidAuthBankingService())
                 {
                     try
                     {
@@ -59,7 +205,7 @@ namespace BankingClientASM_MVC.Controllers
                         {
                             var transfer = new BankingService.AccountTransactionDto()
                             {
-                                ReceiverAccountCode = "d092dab2-f981-42f8-9bdb-d4f777301b4c",
+                                ReceiverAccountCode = "c219ffa0-de35-4456-b2ed-dfb46882e9a2",
                                 Password = "123456",
                                 SenderAccountNumber = accountCurrent.AccountNumber,
                                 OrderCode = transferInfo.OrderCode,
@@ -72,7 +218,8 @@ namespace BankingClientASM_MVC.Controllers
                             var accountLoginInfo = Session["accountLoginInfo"] as AccountLoginViewModel;
                             if (accountLoginInfo != null)
                             {
-                                bankingClient.SendConfirmationPinCode(new BankingService.AccountLoginDto { 
+                                bankingClient.SendConfirmationOTP(new BankingService.AccountLoginDto
+                                {
                                     Username = accountLoginInfo.Username,
                                     Password = accountLoginInfo.Password
                                 });
@@ -88,7 +235,7 @@ namespace BankingClientASM_MVC.Controllers
             }
             return View(transferInfo);
         }
-        
+
         [HttpGet]
         public ActionResult ConfirmationPinCode()
         {
@@ -96,16 +243,18 @@ namespace BankingClientASM_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public ActionResult ConfirmationPinCode(PinCodeViewModel pin)
         {
-           if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var transferInfo = TempData["lastTransferInfo"] as BankingService.AccountTransactionDto;
-                if(transferInfo != null && isValidAuthBankingService())
+                if (transferInfo != null && isValidAuthBankingService())
                 {
                     transferInfo.SenderPinCode = pin.PinCode;
-                    var transferResult = bankingClient.RequireTransaction(transferInfo);
-                    if(transferResult != null)
+                    var transferResult = bankingClient.TransferPaymentOrder(transferInfo);
+                    if (transferResult != null)
                     {
                         return View("TransferSuccess", transferResult);
                     }
@@ -119,13 +268,13 @@ namespace BankingClientASM_MVC.Controllers
         [Authorize]
         public ActionResult TransactionHistory(DateTime? fromDateParam, DateTime? toDateParam)
         {
-            DateTime fromDate = fromDateParam ?? DateTime.Today;
+            DateTime fromDate = fromDateParam ?? DateTime.Now.AddDays(-7);
             DateTime toDate = toDateParam ?? DateTime.Now.AddDays(1);
             try
             {
                 var accountCurrent = Session["accountCurrent"] as BankingService.AccountDto;
                 var accountLoginInfo = Session["accountLoginInfo"] as AccountLoginViewModel;
-                if(accountCurrent != null && isValidAuthBankingService() && accountLoginInfo != null)
+                if (accountCurrent != null && isValidAuthBankingService() && accountLoginInfo != null)
                 {
                     var accountTransaction = new BankingService.AccountGetTransactionHistoryDto
                     {
@@ -135,11 +284,11 @@ namespace BankingClientASM_MVC.Controllers
                         ToDate = toDate,
                     };
                     Debug.WriteLine("Hello world");
-                    var transactionHistory =  bankingClient.ShowTransactionHistory(accountTransaction);
+                    var transactionHistory = bankingClient.ShowTransactionHistory(accountTransaction);
                     return View(transactionHistory);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
@@ -156,25 +305,26 @@ namespace BankingClientASM_MVC.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+
         public ActionResult Login(AccountLoginViewModel account, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    bankingClient.ClientCredentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.None;
+                   /* bankingClient.ClientCredentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.None;
                     bankingClient.ClientCredentials.UserName.UserName = account.Username;
-                    bankingClient.ClientCredentials.UserName.Password = account.Password;
-                    var accountLogin = bankingClient.ShowAccountInformation(new BankingService.AccountLoginDto {
-                       Username = account.Username,
-                       Password = account.Password
+                    bankingClient.ClientCredentials.UserName.Password = account.Password;*/
+                    var accountLogin = bankingClient.ShowAccountInformation(new BankingService.AccountLoginDto
+                    {
+                        Username = account.Username,
+                        Password = account.Password
                     });
-
-
                     if (accountLogin != null)
                     {
                         Session.Add("accountLoginInfo", account);
-                        int timeout = 2;
+                        int timeout = 10;
                         var ticket = new FormsAuthenticationTicket(account.Username, true, timeout);
                         string encrypt = FormsAuthentication.Encrypt(ticket);
                         var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypt);
@@ -182,7 +332,7 @@ namespace BankingClientASM_MVC.Controllers
                         cookie.HttpOnly = true;
                         Response.Cookies.Add(cookie);
                         Session.Add("accountCurrent", accountLogin);
-                        if(Url.IsLocalUrl(ReturnUrl))
+                        if (Url.IsLocalUrl(ReturnUrl))
                         {
                             return Redirect(ReturnUrl);
                         }
@@ -206,23 +356,25 @@ namespace BankingClientASM_MVC.Controllers
         [HttpPost]
         public ActionResult Register(AccountRegisterViewModal newAccount)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                string phoneNumber = "+84" + newAccount.PhoneNumber.Remove(0, 1);
                 var account = bankingAuthClient.RegisterAccount(new BankingAuthService.AccountRegisterDto()
                 {
                     Username = newAccount.Username,
                     Password = newAccount.Password,
                     FullName = newAccount.FullName,
                     Email = newAccount.Email,
-                    PhoneNumber = newAccount.PhoneNumber,
+                    PhoneNumber = phoneNumber,
                     IdentityNumber = newAccount.IdentityNumber,
                     Address = newAccount.Address,
-                }    
+                }
                 );
                 if (account != null)
                 {
                     TempData["Message"] = new XMessage(XMessageType.Success, "Register new account successfull");
-                }else
+                }
+                else
                 {
                     TempData["Message"] = new XMessage(XMessageType.Failed, "Register new accoount failed !");
                 }
@@ -232,23 +384,24 @@ namespace BankingClientASM_MVC.Controllers
 
         public bool isValidAuthBankingService()
         {
-            try
-            {
-                var accountLoginInfo = Session["accountLoginInfo"] as AccountLoginViewModel;
-                Debug.WriteLine("account", accountLoginInfo.Username);
-                if (accountLoginInfo != null)
-                {
-                    bankingClient.ClientCredentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.None;
-                    bankingClient.ClientCredentials.UserName.UserName = accountLoginInfo.Username;
-                    bankingClient.ClientCredentials.UserName.Password = accountLoginInfo.Password;
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            return false;
+            /* try
+             {
+                 var accountLoginInfo = Session["accountLoginInfo"] as AccountLoginViewModel;
+                 Debug.WriteLine("account", accountLoginInfo.Username);
+                 if (accountLoginInfo != null)
+                 {
+                     bankingClient.ClientCredentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.None;
+                     bankingClient.ClientCredentials.UserName.UserName = accountLoginInfo.Username;
+                     bankingClient.ClientCredentials.UserName.Password = accountLoginInfo.Password;
+                     return true;
+                 }
+             }
+             catch (Exception ex)
+             {
+                 Debug.WriteLine(ex);
+             }
+             return false;*/
+            return true;
         }
 
         public ActionResult Logout()

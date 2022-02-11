@@ -146,7 +146,8 @@
     <Compile Include="ViewModels\AccountLoginViewModel.cs" />
     <Compile Include="ViewModels\AccountRegisterViewModal.cs" />
     <Compile Include="ViewModels\PinCodeViewModel.cs" />
-    <Compile Include="ViewModels\TransferViewModel.cs" />
+    <Compile Include="ViewModels\TransferNormalViewModel.cs" />
+    <Compile Include="ViewModels\TransferPaymentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Connected Services\BankingAuthService\BankingClientASM_MVC.BankingAuthService.AccountDto.datasource">
@@ -162,6 +163,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\BankingService\BankingClientASM_MVC.BankingService.TransactionHistoryDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\BankingService\BankingClientASM_MVC.BankingService.AccountInfoTransferDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\BankingService\configuration91.svcinfo" />
@@ -2087,12 +2091,16 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Banking\Dashboard.cshtml" />
-    <Content Include="Views\Banking\Transfer.cshtml" />
+    <Content Include="Views\Banking\TransferPayment.cshtml" />
     <Content Include="Views\Banking\TransactionHistory.cshtml" />
     <Content Include="Views\Banking\Login.cshtml" />
     <Content Include="Views\Banking\ConfirmationPinCode.cshtml" />
     <Content Include="Views\Banking\TransferSuccess.cshtml" />
     <Content Include="Views\Banking\Register.cshtml" />
+    <Content Include="Views\Banking\TransferNormal.cshtml" />
+    <Content Include="Views\Banking\ConfirmationOTPTransferNormal.cshtml" />
+    <Content Include="Views\Banking\TransferFailed.cshtml" />
+    <Content Include="Views\Banking\MyAccountInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,11 +13,24 @@
 
         @using (Html.BeginForm("TransactionHistory", "Banking", FormMethod.Get))
         {
-            <div class="form-group">
-                <input type="date" name="fromDateParam" value="@DateTime.Now.ToString()" />
-                <input type="date" name="toDateParam" value="@DateTime.Now.ToString()" />
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="col-form-label">From</label>
+                        <input type="date" name="fromDateParam" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="col-form-label">To</label>
+                        <input type="date" name="toDateParam" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" style=" margin-top: 2.3rem;">Filter</button>
+                </div>
             </div>
-            <button class="btn btn-primary">Filter</button>
         }
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

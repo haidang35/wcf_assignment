@@ -10,21 +10,23 @@ namespace BankingClientASM_MVC.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Dashboard", "Banking");
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return RedirectToAction("Dashboard", "Banking");
+
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
+            return RedirectToAction("Dashboard", "Banking");
+
         }
     }
 }
