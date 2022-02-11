@@ -14,5 +14,7 @@ update-database
 ```
 ###### Client Application - ASP.NET MVC
 > Accounts Demo
-> 1. Username / Password: userdemo01/123456
-> 2. Username / Password: userdemo02/123456
+> 1. Username : userdemo01
+>    Password: 123456 
+> 2. Username : userdemo02
+>    Password: 123456 
