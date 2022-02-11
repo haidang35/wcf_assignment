@@ -13,3 +13,6 @@ makecert.exe -sr CurrentUser -ss My -a sha1 -n CN=BankingServiceASM -sky exchang
 update-database
 ```
 ###### Client Application - ASP.NET MVC
+> Accounts Demo
+> 1. Username / Password: userdemo01/123456
+> 2. Username / Password: userdemo02/123456
