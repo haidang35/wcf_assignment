@@ -8,4 +8,8 @@ In order for the service application to work, you need to follow the steps below
 makecert.exe -sr CurrentUser -ss My -a sha1 -n CN=BankingServiceASM -sky exchange -pe
 ```
 > 3. Change connection string in web.config file to fit into your local machine
+> 4. Next, run below command to update database 
+```
+update-database
+```
 ###### Client Application - ASP.NET MVC
